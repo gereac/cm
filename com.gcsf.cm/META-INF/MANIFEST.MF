@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Pm
+Bundle-SymbolicName: com.gcsf.cm;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.gcsf.cm.Activator
+Bundle-Vendor: GCSF
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.databinding,
+ org.eclipse.core.databinding.beans,
+ org.eclipse.jface.databinding,
+ org.eclipse.core.expressions
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy

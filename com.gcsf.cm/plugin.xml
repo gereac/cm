@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="com.gcsf.cm.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="Main Perspective"
+            class="com.gcsf.cm.Perspective"
+            id="com.gcsf.cm.perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Contact List"
+            allowMultiple="false"
+            icon="icons/silk/folder_user.png"
+            class="com.gcsf.cm.views.ContactsListView"
+            id="com.gcsf.cm.view.contacsList">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="com.gcsf.cm.commands.category"
+            name="Generic Category">
+      </category>
+      <command
+            categoryId="com.gcsf.cm.commands.category"
+            description="Saves a contact update"
+            id="com.gcsf.cm.commands.saveCommand"
+            name="Save Command">
+      </command>
+      <command
+            categoryId="com.gcsf.cm.commands.category"
+            description="Exits the application"
+            id="com.gcsf.cm.commands.exitCommand"
+            name="Exit Command">
+      </command>
+      <command
+            categoryId="com.gcsf.cm.commands.category"
+            description="Adds a contact"
+            id="com.gcsf.cm.commands.addCommand"
+            name="Add Command">
+      </command>
+      <command
+            categoryId="com.gcsf.cm.commands.category"
+            description="Deletes a contact"
+            id="com.gcsf.cm.commands.deleteCommand"
+            name="Delete Command">
+      </command>
+      <command
+            categoryId="com.gcsf.cm.commands.category"
+            id="com.gcsf.cm.commands.openEditor"
+            name="Open Editor">
+      </command>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="com.gcsf.cm.application"
+            name="Person Manager">
+         <property
+               name="aboutText"
+               value="RCP Mail template created by PDE">
+         </property>
+         <property
+               name="aboutImage"
+               value="product_lg.gif">
+         </property>
+         <property
+               name="appName"
+               value="Person Manager">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/silk/drive_user.png">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="com.gcsf.cm.toolbars.fileToolbar">
+            <command
+                  commandId="com.gcsf.cm.commands.saveCommand"
+                  id="com.gcsf.cm.toolbars.fileToolbar.saveButton"
+                  label="Save"
+                  style="push">
+            </command>
+         </toolbar>
+         <toolbar
+               id="com.gcsf.cm.toolbars.contactToolbar">
+            <command
+                  commandId="com.gcsf.cm.commands.addCommand"
+                  id="com.gcsf.cm.toolbars.contactToolbar.addButton"
+                  label="Add contact"
+                  style="push">
+            </command>
+            <command
+                  commandId="com.gcsf.cm.commands.deleteCommand"
+                  id="com.gcsf.cm.toolbars.contactToolbar.deleteButton"
+                  label="Delete contact"
+                  style="push">
+            </command>
+         </toolbar>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="com.gcsf.cm.menus.fileMenu"
+               label="File"
+               mnemonic="F">
+            <command
+                  commandId="com.gcsf.cm.commands.saveCommand"
+                  label="Save"
+                  style="push">
+            </command>
+            <command
+                  commandId="com.gcsf.cm.commands.exitCommand"
+                  label="Exit"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="com.gcsf.cm.handlers.AddContactHandler"
+            commandId="com.gcsf.cm.commands.addCommand">
+      </handler>
+      <handler
+            class="com.gcsf.cm.handlers.DeleteContactHandler"
+            commandId="com.gcsf.cm.commands.deleteCommand">
+         <activeWhen>
+            <reference
+                  definitionId="oneContactSelectedInContactViewOrInEditor">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.eclipse.ui.internal.handlers.SaveHandler"
+            commandId="com.gcsf.cm.commands.saveCommand">
+      </handler>
+      <handler
+            class="com.gcsf.cm.handlers.ExitHandler"
+            commandId="com.gcsf.cm.commands.exitCommand">
+      </handler>
+      <handler
+            class="com.gcsf.cm.handlers.OpenEditorHandler"
+            commandId="com.gcsf.cm.commands.openEditor">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commandImages">
+      <image
+            commandId="com.gcsf.cm.commands.addCommand"
+            icon="icons/silk/user_add.png">
+      </image>
+      <image
+            commandId="com.gcsf.cm.commands.deleteCommand"
+            icon="icons/silk/user_delete.png">
+      </image>
+      <image
+            commandId="com.gcsf.cm.commands.saveCommand"
+            icon="icons/silk/disk.png">
+      </image>
+      <image
+            commandId="com.gcsf.cm.commands.exitCommand"
+            icon="icons/silk/door_in.png">
+      </image>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.gcsf.cm.editors.DetailsEditor"
+            default="false"
+            icon="icons/silk/report_user.png"
+            id="com.gcsf.cm.editor.details"
+            matchingStrategy="com.gcsf.cm.editors.MyEditorMatchingStrategy"
+            name="Details">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+   <definition
+         id="oneContactSelectedInContactViewOrInEditor">
+      <or>
+         <with
+               variable="activePartId">
+            <equals
+                  value="com.gcsf.cm.editor.details">
+            </equals>
+         </with>
+         <and>
+            <with
+                  variable="activePartId">
+               <equals
+                     value="com.gcsf.cm.view.contacsList">
+               </equals>
+            </with>
+            <count
+                  value="+">
+            </count>
+            <iterate
+                  operator="or">
+               <instanceof
+                     value="com.gcsf.cm.model.Contact">
+               </instanceof>
+            </iterate>
+         </and>
+      </or>
+   </definition>
+      </extension>
+
+</plugin>

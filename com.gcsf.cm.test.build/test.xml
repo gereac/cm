@@ -1,0 +1,28 @@
+<project name="testsuite" default="build">
+	<property name="eclipse.test.home" value="C:\Builds\PCM"/>
+	<property name="test.plugin.name" value="com.gcsf.cm.test" />
+
+	<!-- ================================= 
+          target: build              
+         ================================= -->
+	<target name="build" depends="" description="description">
+		<echo>SWTBot test</echo>
+		<java dir="${eclipse.test.home}" fork="true" output="${eclipse.test.home}/output.txt" logError="true"
+    	classname="org.eclipse.core.launcher.Main" failonerror="false">
+			<classpath>
+				<fileset dir="${eclipse.test.home}/plugins">
+					<include name="org.eclipse.equinox.launcher_*.jar"/>
+				</fileset>
+			</classpath>
+			<arg line="-application org.eclipse.swtbot.eclipse.junit4.headless.swtbottestapplication"/>
+			<arg line="-testPluginName ${test.plugin.name}"/>
+			<arg line="-testApplication com.gcsf.cm.application"/>
+			<arg line="-className com.gcsf.cm.test.AllTests"/>
+			<arg line="formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,junit-results.xml"/>
+			<arg line="-nl en"/>
+			<arg line="-consoleLog"/>
+			<jvmarg line="-Xms40m -Xmx348m -XX:MaxPermSize=256m -XX:+HeapDumpOnOutOfMemoryError"/>
+		</java>
+	</target>
+
+</project>
