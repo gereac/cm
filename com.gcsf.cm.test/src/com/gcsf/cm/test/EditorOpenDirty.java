@@ -38,7 +38,7 @@ import org.junit.Test;
  */
 public class EditorOpenDirty {
 
-  private static SWTWorkbenchBot bot;
+  private static SWTWorkbenchBot myBot;
 
   @Before
   public void runBeforeEveryTest() {
@@ -52,19 +52,19 @@ public class EditorOpenDirty {
 
   @BeforeClass
   public static void beforeClass() throws Exception {
-    bot = new SWTWorkbenchBot();
+    myBot = new SWTWorkbenchBot();
   }
 
   @Test
   public void testToolbarEditorOpenDirty() throws Exception {
-    List<SWTBotView> views = bot.views(WidgetMatcherFactory
+    List<SWTBotView> views = myBot.views(WidgetMatcherFactory
         .withPartName("Contact List"));
     assertEquals(1, views.size());
-    assertEquals("No editor open", 0, bot.editors().size());
-    SWTBotTable table = bot.viewByTitle("Contact List").bot().table();
+    assertEquals("No editor open", 0, myBot.editors().size());
+    SWTBotTable table = myBot.viewByTitle("Contact List").bot().table();
     table.select("Lars");
-    assertEquals("One editor open", 1, bot.editors().size());
-    SWTBotEditor editor = bot.activeEditor();
+    assertEquals("One editor open", 1, myBot.editors().size());
+    SWTBotEditor editor = myBot.activeEditor();
     assertEquals("Details of Lars Vogel", editor.getTitle());
     assertFalse("Editor without changes -> not dirty", editor.isDirty());
     SWTBot editorBot = editor.bot();
@@ -72,20 +72,20 @@ public class EditorOpenDirty {
     assertFalse("Focus to name field", text.isActive());
     text.setText("Heike Muster");
     assertTrue("Editor has become dirty", editor.isDirty());
-    SWTBotToolbarButton saveButton = bot.toolbarButtonWithTooltip("Save");
+    SWTBotToolbarButton saveButton = myBot.toolbarButtonWithTooltip("Save");
     assertTrue("Save button not enabled", saveButton.isEnabled());
-    SWTBotToolbarButton addButton = bot.toolbarButtonWithTooltip("Add contact");
+    SWTBotToolbarButton addButton = myBot.toolbarButtonWithTooltip("Add contact");
     assertTrue("Add button enabled", addButton.isEnabled());
-    SWTBotToolbarButton removeButton = bot
+    SWTBotToolbarButton removeButton = myBot
         .toolbarButtonWithTooltip("Delete contact");
     assertTrue("Delete button enabled", removeButton.isEnabled());
-    SWTBotMenu saveMenuItem = bot.menu("File").menu("Save");
+    SWTBotMenu saveMenuItem = myBot.menu("File").menu("Save");
     assertTrue("Save menu item enabled", saveMenuItem.isEnabled());
     editor.close();
   }
 
   @AfterClass
   public static void sleep() {
-    bot.sleep(100);
+    myBot.sleep(100);
   }
 }

@@ -22,7 +22,7 @@ public class Perspective implements IPerspectiveFactory {
   /**
    * The ID of the perspective as specified in the extension.
    */
-  public static final String ID = "com.gcsf.cm.perspective"; //$NON-NLS-1$
+  public static final String PERSPECTIVE_ID = "com.gcsf.cm.perspective"; //$NON-NLS-1$
 
   @Override
   public void createInitialLayout(IPageLayout aLayout) {

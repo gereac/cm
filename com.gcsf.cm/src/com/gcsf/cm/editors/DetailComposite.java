@@ -195,7 +195,7 @@ public class DetailComposite extends Composite {
   }
 
   private void createSeparator(Composite aParent, String aText) {
-    myGeneralGroup = aText.equals("General"); //$NON-NLS-1$
+    myGeneralGroup = ("General").equals(aText); //$NON-NLS-1$
 
     final Label label = new Label(aParent, SWT.NONE);
     label.setText(aText + "     "); //$NON-NLS-1$
@@ -247,7 +247,7 @@ public class DetailComposite extends Composite {
       gridData2.horizontalSpan = 2;
     } else {
       gridData2.horizontalSpan = 1;
-      if (aLabelText.equals("Title:")) { //$NON-NLS-1$
+      if (("Title:").equals(aLabelText)) { //$NON-NLS-1$
         // The label image is set with data binding
         myImageLabel = new Label(aParent, SWT.NONE);
         GridData gridData3 = new GridData();
@@ -258,7 +258,7 @@ public class DetailComposite extends Composite {
     text.setLayoutData(gridData2);
 
     if (aProperty != null) {
-      if (aProperty.equals("name")) { //$NON-NLS-1$
+      if (("name").equals(aProperty)) { //$NON-NLS-1$
         myDbc.bindValue(SWTObservables.observeText(text, SWT.Modify),
             new AggregateNameObservableValue(myContactValue));
       } else {

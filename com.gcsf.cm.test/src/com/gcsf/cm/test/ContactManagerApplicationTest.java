@@ -42,7 +42,7 @@ import org.junit.runner.RunWith;
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class ContactManagerApplicationTest {
 
-  private static SWTWorkbenchBot bot;
+  private static SWTWorkbenchBot myBot;
 
   @Before
   public void runBeforeEveryTest() {
@@ -56,77 +56,77 @@ public class ContactManagerApplicationTest {
 
   @BeforeClass
   public static void beforeClass() throws Exception {
-    bot = new SWTWorkbenchBot();
+    myBot = new SWTWorkbenchBot();
   }
 
   @Test
   public void testNoEditorOpen() throws Exception {
-    List<SWTBotView> views = bot.views(WidgetMatcherFactory
+    List<SWTBotView> views = myBot.views(WidgetMatcherFactory
         .withPartName("Contact List"));
     assertEquals(1, views.size());
-    assertEquals("No editor open", 0, bot.editors().size());
-    SWTBotToolbarButton saveButton = bot.toolbarButtonWithTooltip("Save");
+    assertEquals("No editor open", 0, myBot.editors().size());
+    SWTBotToolbarButton saveButton = myBot.toolbarButtonWithTooltip("Save");
     assertFalse("Save button not enabled", saveButton.isEnabled());
-    SWTBotToolbarButton addButton = bot.toolbarButtonWithTooltip("Add contact");
+    SWTBotToolbarButton addButton = myBot.toolbarButtonWithTooltip("Add contact");
     assertTrue("Add button enabled", addButton.isEnabled());
-    SWTBotToolbarButton removeButton = bot
+    SWTBotToolbarButton removeButton = myBot
         .toolbarButtonWithTooltip("Delete contact");
     assertFalse("Delete button not enabled", removeButton.isEnabled());
-    SWTBotMenu saveMenuItem = bot.menu("File").menu("Save");
+    SWTBotMenu saveMenuItem = myBot.menu("File").menu("Save");
     assertFalse("Save menu item not enabled", saveMenuItem.isEnabled());
   }
 
   @Test
   public void testOneView() throws Exception {
-    List<SWTBotView> views = bot.views(WidgetMatcherFactory
+    List<SWTBotView> views = myBot.views(WidgetMatcherFactory
         .withPartName("Contact List"));
     assertEquals(1, views.size());
-    assertEquals("No editor open", 0, bot.editors().size());
-    final SWTBotTable table = bot.viewByTitle("Contact List").bot().table();
+    assertEquals("No editor open", 0, myBot.editors().size());
+    final SWTBotTable table = myBot.viewByTitle("Contact List").bot().table();
     table.select("Lars");
-    assertEquals("One editor open", 1, bot.editors().size());
-    SWTBotEditor editor = bot.activeEditor();
+    assertEquals("One editor open", 1, myBot.editors().size());
+    SWTBotEditor editor = myBot.activeEditor();
     assertEquals("Details of Lars Vogel", editor.getTitle());
     assertFalse("Editor without changes -> not dirty", editor.isDirty());
     table.select("Tom");
-    assertEquals("Still one editor open", 1, bot.editors().size());
-    editor = bot.activeEditor();
+    assertEquals("Still one editor open", 1, myBot.editors().size());
+    editor = myBot.activeEditor();
     SWTBot editorBot = editor.bot();
     SWTBotText text = editorBot.textWithLabel("Name:   ");
     assertFalse("Focus to name field", text.isActive());
     text.setText("Heike Muster");
     assertTrue("Editor has become dirty", editor.isDirty());
     editor.close();
-    bot.sleep(200);
-    assertEquals("No editor open", 0, bot.editors().size());
+    myBot.sleep(200);
+    assertEquals("No editor open", 0, myBot.editors().size());
   }
 
   @Test
   public void testToolbarEditorOpenNotDirty() throws Exception {
-    List<SWTBotView> views = bot.views(WidgetMatcherFactory
+    List<SWTBotView> views = myBot.views(WidgetMatcherFactory
         .withPartName("Contact List"));
     assertEquals(1, views.size());
-    assertEquals("No editor open", 0, bot.editors().size());
-    SWTBotTable table = bot.viewByTitle("Contact List").bot().table();
+    assertEquals("No editor open", 0, myBot.editors().size());
+    SWTBotTable table = myBot.viewByTitle("Contact List").bot().table();
     table.select("Lars");
-    assertEquals("One editor open", 1, bot.editors().size());
-    SWTBotEditor editor = bot.activeEditor();
+    assertEquals("One editor open", 1, myBot.editors().size());
+    SWTBotEditor editor = myBot.activeEditor();
     assertEquals("Details of Lars Vogel", editor.getTitle());
     assertFalse("Editor without changes -> not dirty", editor.isDirty());
-    SWTBotToolbarButton saveButton = bot.toolbarButtonWithTooltip("Save");
+    SWTBotToolbarButton saveButton = myBot.toolbarButtonWithTooltip("Save");
     assertFalse("Save button not enabled", saveButton.isEnabled());
-    SWTBotToolbarButton addButton = bot.toolbarButtonWithTooltip("Add contact");
+    SWTBotToolbarButton addButton = myBot.toolbarButtonWithTooltip("Add contact");
     assertTrue("Add button enabled", addButton.isEnabled());
-    SWTBotToolbarButton removeButton = bot
+    SWTBotToolbarButton removeButton = myBot
         .toolbarButtonWithTooltip("Delete contact");
     assertTrue("Delete button enabled", removeButton.isEnabled());
-    SWTBotMenu saveMenuItem = bot.menu("File").menu("Save");
+    SWTBotMenu saveMenuItem = myBot.menu("File").menu("Save");
     assertFalse("Save menu item not enabled", saveMenuItem.isEnabled());
     editor.close();
   }
 
   @AfterClass
   public static void sleep() {
-    bot.sleep(100);
+    myBot.sleep(100);
   }
 }
