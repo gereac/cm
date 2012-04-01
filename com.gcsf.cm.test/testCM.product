@@ -69,8 +69,14 @@
 
    <features>
       <feature id="com.gcsf.cm.feature"/>
-      <feature id="com.gcsf.cm.test.feature"/>
+      <feature id="org.eclipse.jdt"/>
+      <feature id="org.eclipse.pde"/>
       <feature id="org.eclipse.rcp"/>
+      <feature id="org.eclipse.swtbot"/>
+      <feature id="org.eclipse.swtbot.eclipse"/>
+      <feature id="org.eclipse.swtbot.eclipse.test.junit4"/>
+      <feature id="com.gcsf.cm.test.feature"/>
+      <feature id="org.eclipse.platform"/>
    </features>
 
 
