@@ -17,6 +17,8 @@
 -->
 <project name="mail.build" default="build">
 	<property file="build.properties" />
+	<property name="temp.dir" value="C:/Temp/${env.USERNAME}" />
+	<property name="test.build.dir" value="${buildDirectory}" />
 
 
 	<!--
@@ -84,6 +86,8 @@
 
 	<target name="clean">
 		<echo message="+++++++++++++++++++++" />
+		<echo message="using java version: ${ant.java.version}"/>
+		<delete dir="${temp.dir}"/>
 		<echo message="... cleaning build directory ..." />
 		<delete dir="${buildDirectory}" />
 		<echo message="---------------------" />
@@ -135,5 +139,36 @@
 		<echo message="Using pde build folder location: ${pde.build.folder.location}" />
 	</target>
 
-	<target name="build" depends="clean, init, pde-build" />
+	<target name="test-build" depends="deployPDEBuild, -testBuild" description="test build"/>
+
+	<target name="deployPDEBuild">
+		<echo message="++++++++++++++++++++" />
+		<echo message="starting the deployment of the pde build ... " />
+		<delete dir="${temp.dir}" />
+		<mkdir dir="${temp.dir}/sw" />
+		<echo message="unpack application files to temporary folder ..." />
+		<unzip src="${buildDirectory}/${buildLabel}/${buildId}-${baseos}.${basews}.${basearch}.zip" dest="${temp.dir}/sw" />
+		<echo message="cleaning the build directory ..." />
+		<delete includeemptydirs="true" verbose="false">
+			<fileset dir="${buildDirectory}">
+				<!-- <include name="**" /> -->
+				<exclude name="**/logs/*.*" />
+			</fileset>
+		</delete>
+		<echo message="creating the folder for the test ..." />
+		<mkdir dir="${test.build.dir}" />
+		<echo message="populating the folder for test ..." />
+		<move file="${temp.dir}/sw/${collectingFolder}" tofile="${test.build.dir}" />
+		<delete dir="${temp.dir}" />
+		<echo message="finished the deployment of the pde build ... " />
+		<echo message="---------------------" />
+	</target>
+
+	<target name="-testBuild">
+		<ant antfile="test.xml">
+			<property name="eclipse.test.home" value="${test.build.dir}" />
+		</ant>
+	</target>
+
+	<target name="build" depends="clean, init, pde-build, test-build" />
 </project>

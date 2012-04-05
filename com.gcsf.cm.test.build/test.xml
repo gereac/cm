@@ -1,5 +1,4 @@
 <project name="testsuite" default="build">
-	<property name="eclipse.test.home" value="C:\Builds\PCM"/>
 	<property name="test.plugin.name" value="com.gcsf.cm.test" />
 
 	<!-- ================================= 
