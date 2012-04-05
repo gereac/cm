@@ -1,0 +1,9 @@
+Simple contact manager based on Eclipse 3.x.
+Started from https://github.com/toedter/e4-rendering and using the internal contact model.
+With SWTBot tests and automatisation based on:
+ - http://richardadams606blog.blogspot.com/2010/04/headless-swtbot-testing-for-eclipse-rcp.html
+ - http://wiki.eclipse.org/SWTBot/Ant
+ - http://www.bonitasoft.org/blog/eclipse/swtbot-my-new-friend/
+ - https://community.jboss.org/wiki/RunningEclipsePluginTestsWithSWTBotInHeadlessMode?_sscc=t
+ 
+Icons from http://www.famfamfam.com/.
